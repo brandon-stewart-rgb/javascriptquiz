@@ -43,16 +43,20 @@ p.score-text {
 header {
     width: 100%;
     background-color: var(--tertiary-color);
-    padding: 10px;
+    padding: 5px;
     display: flex;
     border-bottom: solid 2px var(--background-color);
+    justify-content: space-evenly;
+}
+header span {
+    padding: 0 30px;
 }
 .counter {
     font-size: 22px;
     color: #fff;
 }
 .counter-time {
-    font-size: 22px;
+    font-size: 22px; 
     color: #fff;
     padding: 0 10px 0 0;
 }
@@ -62,8 +66,7 @@ header {
     align-items:center; 
     height: 100vh;
     margin: 0;
-    padding: 0;
-    
+    padding: 0;   
 }
 .container {
     border-radius: 4px;
@@ -74,7 +77,7 @@ header {
     max-width: 75%;
 }
 .initial-text {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     text-align: center;
     line-height: 1.5em;
@@ -100,7 +103,7 @@ header {
     padding: 14px 0 14px 10px;
 }
 
-.btn-answer {
+.btn-answer, .submit-btn {
     background-color: var(--tertiary-color);
     color: #fff;
     border-radius: 5px;
@@ -109,7 +112,7 @@ header {
     font-size: 22px;
     cursor: pointer;
 }
-.btn-answer:hover {
+.btn-answer:hover, .submit-btn:hover {
     background-color: var(--secondary-color);
 }
 .question {
