@@ -7,31 +7,32 @@ const wrongAnswer = document.getElementById("wrong");
 
 const containerOne = document.getElementById("container-one");
 const containerTwo = document.getElementById("container-two");
+const containerThree = document.getElementById("container-three");
 
-const finalScore = document.getElementById("final-score");
-const yourFinalScore = document.getElementById("your-final-score")
+const username = document.getElementById("username")
+const finalScore = document.getElementById("final-score")
 
 const mostRecentScore = localStorage.getItem('mostRecentScore');
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-const MAX_HIGH_SCORES = 5;
+const submit = document.getElementById('submit');
+const listScores = document.getElementById('list');
 
 
+username.addEventListener('keyup', () => {
+    submit.disabled = !username.value;
+});
 
-
-
-
-
+ 
 
 // variables
 let currentQuestion = {};
 // set to false initially to wait for page load
 let acceptingAnswers = false;
 let questionCounter = 0;
-//let score = 0;
-let timeLeft = 40;
+let timeLeft = 25;
 // empty array
 let availableQuestions = [];
-let Points = 10;
+let Points = 20;
 var score = 0;
 const maxQuestions = 4; 
 
@@ -94,8 +95,7 @@ getNewQuestion = () => {
         containerTwo.classList.remove('hide'),
         countdown.classList.add('hide'), 
         localStorage.setItem("mostRecentScore", score), 
-        finalScore.innerHTML = "<strong>" + score + "!</strong>", 
-        yourFinalScore.innerText = mostRecentScore
+        finalScore.innerHTML = "<strong>" + score + "!</strong>"
           ];
     };   
     // starting game increments to 1
@@ -128,14 +128,15 @@ choices.forEach((choice) => {
         const selectedAnswer = selectedChoice.dataset['number'];
     
         // if selected answer is true
-        if (selectedAnswer == currentQuestion.answer  ) {
+        if (selectedAnswer == currentQuestion.answer) {
         // increase score
         incrementScore(Points)
-        // and...
+        // and...show correct! via class remove
         correctAnswer.classList.remove('hide');
         } else {
         // decrement time
         timeLeft-=10;
+        // and...show wrong! via class remove
         wrongAnswer.classList.remove('hide');
         
         }
@@ -152,8 +153,8 @@ choices.forEach((choice) => {
 
 
 
-    // Timer started at 75 seconds    
-    var downloadTimer = setInterval(function() {
+// Timer started at 75 seconds    
+var downloadTimer = setInterval(function() {
     if(timeLeft <= 0)
     {
     clearInterval(downloadTimer);
@@ -163,18 +164,44 @@ choices.forEach((choice) => {
       document.getElementById("countdown").innerHTML = timeLeft + " seconds remaining";
      }
      timeLeft -= 1;
-    }, 1000);
+}, 1000);
 
  
-        
+// increase score function        
 incrementScore = num => {
-    score +=num;
-    //finalScore.innerHTML = "Score " + score;  
+    score +=num;  
 }
 
 
 
+saveInitials = (e) => {
+        e.preventDefault();
+        // create an array of score and name
+        const theScore = {
+            score: mostRecentScore,
+            name: username.value,
+        };
+        // adds new items to the array of high scores
+        highScores.push(theScore);
+        // sort scores
+        highScores.sort( (a,b) => {
+            return b.theScore - a.theScore;
+        });
+        highScores.splice(5);
 
+        //update local storage
+        localStorage.setItem("highScores", JSON.stringify(highScores));  
+
+        containerTwo.classList.add('hide');
+        containerThree.classList.remove('hide');
+
+        listScores.innerHTML = highScores
+        .map( theScore => {
+            return "<li>" + theScore.score + " | " + theScore.name + "</li>"
+             
+        });
+        
+}
 
 
 

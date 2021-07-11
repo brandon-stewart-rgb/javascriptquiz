@@ -5,7 +5,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--secondary-color);
+    background-color: var(--light-blue);
 }
 
 :root {
@@ -15,7 +15,8 @@ body {
    --background-color: #DEF8FA;
    --darker-blue: #81A0B5;
    --pink: #D4B5FF;
-   --grey: rgb(94, 89, 89);
+   --light-blue: #e7f9fa;
+  
 }
 
 .hide {
@@ -73,8 +74,18 @@ header span {
     border: solid 2px var(--tertiary-color);
     background-color: #fff;
     padding: 20px;
-    width: 600px;
+    width: 500px;
     max-width: 75%;
+    
+}
+.container-two, .container-three {
+    border-radius: 4px;
+    border: solid 2px var(--tertiary-color);
+    background-color: #fff;
+    padding: 20px;
+    width: 300px;
+    max-width: 75%;
+   
 }
 .initial-text {
     font-size: 17px;
@@ -93,7 +104,7 @@ header span {
 }
 .input-group {
     display: grid;
-    grid-template-columns: 30% 25% 40%;
+    grid-template-rows:;
     gap: 10px; 
     font-weight: bold;
     color: #555;
@@ -101,6 +112,13 @@ header span {
 }
 .input-group input {
     padding: 14px 0 14px 10px;
+    border: solid 3px var(--secondary-color);
+    font-size: 15px;
+    text-align: center;
+    background-color: var(--light-blue);
+}
+.input-group label {
+    text-align: center;
 }
 
 .btn-answer, .submit-btn {
@@ -121,11 +139,7 @@ header span {
     text-align: center;
     padding: 0 0 20px;
 }
-.controls {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-}
+
 #correct.feedback {
     margin: 20px auto;
     width: 50%;
@@ -137,6 +151,7 @@ header span {
     padding: 20px 0 20px 10px;
     border-left: solid 8px var(--secondary-color);
     border-right: solid 8px var(--secondary-color);
+
 }
 #wrong.feedback {
     margin: 20px auto;
@@ -150,21 +165,28 @@ header span {
     border-left: solid 8px var(--tertiary-color);
     border-right: solid 8px var(--tertiary-color);
 }
+.controls {
+    display: grid;
+    align-items: center;
+}
 .start-button {
     background-color: var(--tertiary-color);
     color: #fff;
     text-transform: uppercase;
     border-radius: 5px;
-    padding:20px ;
+    padding:15px;
     border: solid 5px  var(--background-color);
-    font-size: 22px;
+    font-size: 18px;
     cursor: pointer;  
-    margin: 60px 0;
+    margin: 5px 0;
+    width: 100%;
 }
 .start-button:hover {
     background-color: var(--secondary-color);
 }
 
-.fa-play{
-    color: #fff;
-  }
+.container-three ul {
+    list-style: none;
+    text-align: center;
+    font-size: 15px;
+}
