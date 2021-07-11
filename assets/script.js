@@ -12,9 +12,10 @@ const containerThree = document.getElementById("container-three");
 const username = document.getElementById("username")
 const finalScore = document.getElementById("final-score")
 
+const submit = document.getElementById('submit');
 const mostRecentScore = localStorage.getItem('mostRecentScore');
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-const submit = document.getElementById('submit');
+
 const listScores = document.getElementById('list');
 
 
@@ -191,18 +192,32 @@ saveInitials = (e) => {
 
         //update local storage
         localStorage.setItem("highScores", JSON.stringify(highScores));  
+       // localStorage.setItem("mostRecentScore", JSON.stringify(mostRecentScore)); 
+
+    //    listScores.innerHTML = highScores
+    //     .map( theScore => {
+    //         return "<li>" + theScore.score + " | " + theScore.name + "</li> "
+              
+    //     });
+
+    
+ 
+        
+
+
+        listScores.innerHTML = highScores
+        .map(theScore => {
+            return `<li class="high-score">${theScore.name} - ${theScore.score}</li>`;
+        })
+        .join(""); 
 
         containerTwo.classList.add('hide');
         containerThree.classList.remove('hide');
 
-        listScores.innerHTML = highScores
-        .map( theScore => {
-            return "<li>" + theScore.score + " | " + theScore.name + "</li>"
-             
-        });
-        
+        return; 
+          
 }
-
+ 
 
 
 // begin the game
