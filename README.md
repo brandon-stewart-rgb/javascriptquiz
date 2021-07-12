@@ -5,7 +5,7 @@ A javascript quiz.  Inspired by James Q Quick
 
 # The Quiz
 > Site example using semantic code with accessible markup.
-> Live site demo: [_Brandon Stewart's Portfolio_](https://brandon-stewart-rgb.github.io/portfolio/). 
+> Live site demo: [_Brandon Stewart's Portfolio_](https://brandon-stewart-rgb.github.io/javascriptquiz/). 
 
 ## General Information
 
