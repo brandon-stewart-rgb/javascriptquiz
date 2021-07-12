@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <header>
-        <p>&nbsp; <span id="countdown" class="counter"></span> <span class="counter-time" id=""></span></p>
+    <header >
+        <p id="header-paragraph" class="empty">&nbsp; <span id="time-up" class="counter hide">Your time is up!</span> 
+            <span id="time-left" class="counter"></span></p>
     </header>
     
 <div class="wrapper">
@@ -31,28 +32,27 @@
     
     <div class="container-two hide" id="container-two">
         <h2>Quiz has Ended!!</h2>
-        <p  class="score-text">Your final score is:<span id="final-score"></span></p>
+        <p  class="score-text">Your final score is:<span id="final-score">0</span></p>
             <form >
                 <div class="input-group"> 
                   <label for="initials">Enter Your Initials</label>
-                  <input type="text" name="username" id="username" placeholder="initials"/>
+                  <input type="text" name="username" id="username" maxlength="3"/>
                 <button id="submit" class="start-button" onclick="saveInitials(event)" disabled >Enter</button>
                 </div>
             </form>
     
             <div class="controls"> 
                 <button  class="start-button" onclick="window.location.href='/index.html'">play again?</button>
-                <button  class="start-button" onclick="viewScores(event)">View Scores</button>
-            </div>
-   
+                <button  class="start-button" onclick="window.location.href='/highscores.html'">View High Scores?</button>         
+            </div>  
     </div>
-
     <!--end container two-->
 
     <div class="container-three hide" id="container-three">
         <h2>High Scores</h2>
         <ul id="list"></ul>
         <button  class="start-button" onclick="window.location.href='/index.html'">play again?</button>
+        <button id="clear-button"  class="start-button" onclick="clearAll()">Clear Scores</button>
     </div>
     <!--end container three-->
 
