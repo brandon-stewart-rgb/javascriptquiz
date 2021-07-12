@@ -1,42 +1,29 @@
-// constants
 const question = document.getElementById("question");
-// gets an array of the 4 buttons along with the data-set
 const choices = Array.from( document.getElementsByClassName("btn-answer"));
 const correctAnswer = document.getElementById("correct");
 const wrongAnswer = document.getElementById("wrong");
-
 const containerOne = document.getElementById("container-one");
 const containerTwo = document.getElementById("container-two");
 const containerThree = document.getElementById("container-three");
-
 const username = document.getElementById("username")
-const finalScore = document.getElementById("final-score")
-
+const finalScore = document.getElementById("final-score", score)
 const submit = document.getElementById('submit');
-const mostRecentScore = localStorage.getItem('mostRecentScore');
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-
 const listScores = document.getElementById('list');
-
-
-username.addEventListener('keyup', () => {
-    submit.disabled = !username.value;
-});
-
- 
-
-// variables
+const headerParagraph = document.getElementById('header-paragraph')
+const timeUp = document.getElementById('time-up');
+const clearButton = document.getElementById('clear-button')
+let currentTime = 30;
+let timerId = null;
+const timeLeft = document.getElementById('time-left');
 let currentQuestion = {};
-// set to false initially to wait for page load
 let acceptingAnswers = false;
 let questionCounter = 0;
-let timeLeft = 25;
 // empty array
 let availableQuestions = [];
-let Points = 20;
+let Points = 1;
 var score = 0;
 const maxQuestions = 4; 
-
 
 
 // array of questions
@@ -76,7 +63,6 @@ let questions = [
 ];
 
 
- 
 startGame = () => {
     // reset  to make sure we're starting at first question
     questionCounter = 0;
@@ -88,18 +74,17 @@ startGame = () => {
 };
 
 
-
 getNewQuestion = () => {
-    if(availableQuestions.length === 0 || questionCounter >= maxQuestions )  {
+    if(availableQuestions.length === 0 && questionCounter >= maxQuestions )  {
     return [
         containerOne.classList.add('hide'), 
         containerTwo.classList.remove('hide'),
-        countdown.classList.add('hide'), 
-        localStorage.setItem("mostRecentScore", score), 
-        finalScore.innerHTML = "<strong>" + score + "!</strong>"
-          ];
-    };   
-    // starting game increments to 1
+        timeLeft.classList.add('hide'),   
+        headerParagraph.classList.add('hide') 
+          ]; 
+    };  
+
+    // starting game increments questions by 1
     questionCounter ++;
     //random questions and answers each time
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
@@ -116,18 +101,14 @@ getNewQuestion = () => {
     availableQuestions.splice(questionIndex, 1);
     acceptingAnswers = true;
 };
-
-
-
+ 
 
 choices.forEach((choice) => {
     choice.addEventListener('click', (e) => {
         if (!acceptingAnswers) return;
-
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
-    
         // if selected answer is true
         if (selectedAnswer == currentQuestion.answer) {
         // increase score
@@ -136,10 +117,9 @@ choices.forEach((choice) => {
         correctAnswer.classList.remove('hide');
         } else {
         // decrement time
-        timeLeft-=10;
+       currentTime -=10;
         // and...show wrong! via class remove
         wrongAnswer.classList.remove('hide');
-        
         }
 
         // slow things down a bit in order to see correct/incorrect states
@@ -152,73 +132,77 @@ choices.forEach((choice) => {
     });
 });
 
-
-
-// Timer started at 75 seconds    
-var downloadTimer = setInterval(function() {
-    if(timeLeft <= 0)
-    {
-    clearInterval(downloadTimer);
-     return containerOne.classList.add('hide') || containerTwo.classList.remove('hide') || countdown.classList.add('hide');
-     ;
-     } else {
-      document.getElementById("countdown").innerHTML = timeLeft + " seconds remaining";
-     }
-     timeLeft -= 1;
-}, 1000);
-
+ 
  
 // increase score function        
 incrementScore = num => {
     score +=num;  
+    finalScore.innerHTML = "<strong>" + score + "!</strong>"  
 }
-
-
+// on keyup allow enter button
+username.addEventListener('keyup', () => {
+    submit.disabled = !username.value;
+});
 
 saveInitials = (e) => {
         e.preventDefault();
+
         // create an array of score and name
         const theScore = {
-            score: mostRecentScore,
+            score,
             name: username.value,
         };
+
         // adds new items to the array of high scores
         highScores.push(theScore);
         // sort scores
-        highScores.sort( (a,b) => {
-            return b.theScore - a.theScore;
-        });
-        highScores.splice(5);
-
-        //update local storage
+        highScores.sort((a, b) => 
+        b.score- a.score
+        );
+        highScores.splice(8);
+        //update local storage 
         localStorage.setItem("highScores", JSON.stringify(highScores));  
-       // localStorage.setItem("mostRecentScore", JSON.stringify(mostRecentScore)); 
-
-    //    listScores.innerHTML = highScores
-    //     .map( theScore => {
-    //         return "<li>" + theScore.score + " | " + theScore.name + "</li> "
-              
-    //     });
-
-    
- 
-        
-
+         
 
         listScores.innerHTML = highScores
         .map(theScore => {
             return `<li class="high-score">${theScore.name} - ${theScore.score}</li>`;
         })
         .join(""); 
+        // stop the clock to keep hide classes from appearing
+        clearInterval(timerId)
+        clearInterval(countDownTimerId)
 
         containerTwo.classList.add('hide');
         containerThree.classList.remove('hide');
 
-        return; 
-          
-}
- 
+        return;     
+};
+  
+countDown = () => {
+    currentTime--;
+    timeLeft.textContent = currentTime;
+   
+    if (currentTime <= 0) { 
+      return [
+           clearInterval(timerId),
+           clearInterval(countDownTimerId), 
+           containerOne.classList.add('hide'), 
+           containerTwo.classList.remove('hide'), 
+           timeLeft.classList.add('hide'), 
+           timeUp.classList.remove('hide')
+      ];
+    } 
+   
+   };
+   let countDownTimerId = setInterval(countDown, 1000);
 
+ //clear high scores function
+  clearAll = () => {
+    window.localStorage.clear();
+    listScores.innerText = "Cleared!" 
+    clearButton.classList.add('hide')
+   }
 
 // begin the game
 startGame();

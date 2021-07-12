@@ -188,5 +188,18 @@ header span {
 .container-three ul {
     list-style: none;
     text-align: center;
-    font-size: 15px;
+    margin: 0;
+    padding: 0;
+}
+.container-three  li{
+    background-color: var(--tertiary-color);
+    text-transform: uppercase;
+    width: 80%;
+    padding: 3px 0 ;
+    margin: 0 auto 20px ;
+    color: #fff;
+    letter-spacing: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
 }
