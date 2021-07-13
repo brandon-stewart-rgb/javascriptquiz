@@ -21,7 +21,7 @@ let acceptingAnswers = false;
 let questionCounter = 0;
 // empty array
 let availableQuestions = [];
-let Points = 1;
+let Points = 10;
 var score = 0;
 const maxQuestions = 4; 
 
