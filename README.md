@@ -1,6 +1,6 @@
 # javascriptquiz
 
-A javascript quiz.  Inspired by James Q Quick
+A javascript quiz.  Inspired by Web Dev Simplified
 
 
 # The Quiz
